@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lunch Special – Tum Thai Cuisine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --cream:        #f2efe8;
+      --cream-alt:    #ece5da;
+      --parchment:    #f7f1e8;
+      --border:       #d8c7b4;
+      --border-inner: #e5d7c5;
+      --brown-dark:   #2d1a0f;
+      --brown-mid:    #46362d;
+      --brown-nav:    #4b250c;
+      --brown-accent: #7b4618;
+      --brown-footer: #8b571d;
+      --gold:         #d9a066;
+      --gold-light:   #e8bc7b;
+      --gold-hover:   #efc08c;
+      --gold-bar:     #b88347;
+      --text-muted:   #5a4335;
+      --text-card:    #6a584d;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream) url('TTBG.svg') repeat; color: var(--brown-dark); font-family: 'Lato', sans-serif; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; color: inherit; }
+    .philosopher { font-family: 'Philosopher', serif; }
+
+    .navbar { background: var(--brown-nav); color: var(--gold-light); position: sticky; top: 0; z-index: 999; box-shadow: 0 4px 18px rgba(0,0,0,.35); }
+    .navbar__inner { max-width: 1200px; margin: 0 auto; padding: .75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .navbar__brand { display: flex; align-items: center; gap: .75rem; }
+    .navbar__logo { width: 48px; height: 48px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Philosopher', serif; font-weight: 700; font-size: 1.1rem; color: var(--brown-nav); flex-shrink: 0; }
+    .navbar__title { font-family: 'Philosopher', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: .04em; color: #fff; }
+    .navbar__sub { font-size: .72rem; color: var(--gold-light); }
+    .navbar__links { display: flex; gap: 1.75rem; list-style: none; font-family: 'Philosopher', serif; font-weight: 700; font-size: .95rem; letter-spacing: .04em; }
+    .navbar__links a { color: var(--gold-light); transition: color .2s; white-space: nowrap; }
+    .navbar__links a:hover, .navbar__links a.active { color: #fff; }
+    .navbar__cta { background: var(--gold); color: #3a1d0f; border: none; padding: .5rem 1.3rem; border-radius: 999px; font-family: 'Philosopher', serif; font-size: .95rem; font-weight: 700; cursor: pointer; transition: background .2s, transform .15s; white-space: nowrap; }
+    .navbar__cta:hover { background: var(--gold-light); transform: scale(1.04); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: .25rem; }
+    .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--gold-light); border-radius: 2px; }
+
+    .page-banner { background: #f2efe8; text-align: center; padding: 3rem 1.5rem 2.5rem; border-bottom: 3px solid var(--gold-bar); }
+    .page-banner h1 { font-family: 'Philosopher', serif; font-size: clamp(2.6rem, 6vw, 4rem); color: var(--brown-accent); letter-spacing: .06em; }
+    .page-banner p { color: var(--brown-mid); font-size: 1rem; margin-top: .5rem; letter-spacing: .05em; }
+
+    .jump-nav { background: var(--parchment); border-bottom: 1px solid var(--border); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .jump-nav__list { display: flex; list-style: none; max-width: 1200px; margin: 0 auto; padding: .6rem 1.5rem; gap: .35rem; }
+    .jump-nav__list a { display: block; white-space: nowrap; font-size: .82rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--brown-accent); padding: .45rem .9rem; border-radius: 999px; border: 1px solid transparent; transition: background .2s, border-color .2s; }
+    .jump-nav__list a:hover { background: var(--brown-accent); color: #fff; }
+
+    .menu-section { padding: 4rem 1.25rem 5rem; border-top: 1px solid var(--border); }
+    .menu-section--alt { background: var(--cream-alt); }
+    .section-heading { text-align: center; margin-bottom: 2.5rem; }
+    .section-heading h2 { font-family: 'Philosopher', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); color: var(--brown-accent); line-height: 1.2; }
+    .section-heading .sub { font-family: 'Philosopher', serif; font-size: 1rem; font-weight: 400; color: var(--text-muted); display: block; margin-top: .3rem; }
+
+    .choice-card { max-width: 540px; margin: 1.5rem auto 2.5rem; background: var(--parchment); border: 1px solid #d7c2aa; border-radius: 8px; padding: 1.5rem 2rem; position: relative; box-shadow: 0 8px 30px rgba(123,70,24,.07); }
+    .choice-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold-bar); border-radius: 8px 8px 0 0; }
+    .choice-card h3 { font-family: 'Philosopher', serif; font-size: 1.35rem; color: var(--brown-accent); margin-bottom: 1rem; }
+    .choice-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-inner); padding: .55rem 0; font-size: .95rem; }
+    .choice-row:last-child { border-bottom: none; }
+    .choice-row .label { color: var(--text-muted); font-weight: 600; }
+    .choice-row .price { color: var(--brown-accent); font-weight: 700; }
+
+    .section-note { font-size: 1.05rem; font-weight: 700; color: var(--brown-accent); text-align: center; margin-top: .75rem; line-height: 1.7; }
+    .section-note .light { font-weight: 400; font-size: .9rem; color: var(--text-muted); }
+
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem 1.75rem; max-width: 1400px; margin: 0 auto; }
+
+    .menu-item { border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+    .menu-item img { width: 100%; height: 210px; object-fit: cover; border-radius: 10px; margin-bottom: .85rem; transition: transform .35s ease; }
+    .menu-item:hover img { transform: scale(1.03); }
+    .menu-item__img-wrap { overflow: hidden; border-radius: 10px; }
+    .menu-item__name { font-size: 1.15rem; font-weight: 700; letter-spacing: .035em; color: var(--brown-accent); line-height: 1.35; margin-bottom: .4rem; }
+    .menu-item__sub { font-weight: 400; font-size: .88rem; letter-spacing: .01em; display: block; margin-top: .1rem; }
+    .menu-item__desc { font-size: .9rem; color: var(--text-card); line-height: 1.65; letter-spacing: .02em; margin-bottom: .65rem; }
+    .menu-item__price { font-size: 1.2rem; font-weight: 700; color: var(--brown-accent); letter-spacing: .04em; }
+    .menu-item--side .menu-item__row { display: flex; justify-content: space-between; align-items: center; gap: .5rem; margin-top: .2rem; }
+
+    .footer { background: var(--brown-footer); color: #fff; padding: 2.5rem 1.5rem; }
+    .footer__inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; align-items: start; }
+    .footer__logo { width: 48px; height: 48px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Philosopher', serif; font-weight: 700; font-size: 1.1rem; color: var(--brown-nav); margin-bottom: .65rem; }
+    .footer__tagline { font-size: .8rem; line-height: 1.6; color: #f6e7d3; }
+    .footer h3 { font-family: 'Philosopher', serif; font-size: 1.2rem; margin-bottom: .65rem; }
+    .footer address { font-style: normal; font-size: .8rem; line-height: 1.7; color: #f6e7d3; }
+    .footer__phone { margin-top: .5rem; font-size: .8rem; }
+    .footer__social { display: flex; gap: .65rem; flex-wrap: wrap; margin-top: .35rem; }
+    .footer__social a { border: 1px solid #fff; border-radius: 999px; padding: .3rem .9rem; font-size: .75rem; color: #fff; transition: background .2s, color .2s; }
+    .footer__social a:hover { background: #fff; color: var(--brown-footer); }
+    .footer__copy { text-align: center; font-size: .72rem; color: rgba(255,255,255,.4); margin-top: 2rem; border-top: 1px solid rgba(255,255,255,.15); padding-top: 1rem; }
+
+    @media (max-width: 768px) {
+      .navbar__links, .navbar__cta { display: none; }
+      .nav-toggle { display: flex; }
+      .navbar__links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--brown-nav); padding: 1.25rem 1.5rem 1.75rem; gap: 1rem; box-shadow: 0 8px 20px rgba(0,0,0,.25); }
+      .footer__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+      .menu-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar" id="top">
+  <div class="navbar__inner">
+    <div class="navbar__brand">
+      <img src="TumThaiLogo.png" alt="Tum Thai Cuisine" style="height:60px; width:auto; object-fit:contain; mix-blend-mode:lighten;"/>
+    </div>
+    <nav>
+      <ul class="navbar__links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="#" class="active">Lunch Special</a></li>
+        <li><a href="dessert-drink.html">Dessert-Drink</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="navbar__cta" onclick="window.location='index.html#contact'">Reserve Table</button>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div style="width:100%; max-height:338px; overflow:hidden;">
+  <img src="Cover_Image2.jpeg" alt="Tum Thai Cuisine" style="width:100%; height:338px; object-fit:cover; object-position:center; display:block;"/>
+</div>
+
+<div class="page-banner">
+  <h1 class="philosopher">Lunch Special</h1>
+  <p>12:00 pm – 3:30 pm on Monday thru Friday (Not include holidays)</p>
+  <p style="margin-top:.35rem;">Each entrée served with Chicken Tom Yum Soup and Salad with Peanut Dressing</p>
+</div>
+
+<section class="menu-section" id="lunch-special">
+  <div class="section-heading">
+    <div class="choice-card" style="max-width:600px;">
+      <h3>Add your choice of meat</h3>
+      <div class="choice-row">
+        <span class="label">Chicken, Pork, Vegetable, or Tofu</span>
+        <span class="price">$16.00</span>
+      </div>
+      <div class="choice-row">
+        <span class="label">Beef, Shrimp, or Squid</span>
+        <span class="price">$18.00</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section menu-section--alt" id="sauteed">
+  <div class="section-heading">
+    <h2 class="philosopher">Sautéed<span class="sub">Served with Jasmine Rice</span></h2>
+  </div>
+  <div style="max-width:800px; margin:0 auto;">
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L1. Sautéed Hot Sweet Basil 🌶️</div>
+      <p class="menu-item__desc">Fresh basil, mushrooms in basil sauce.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L2. Sautéed Ginger</div>
+      <p class="menu-item__desc">Fresh ginger, onion, mushrooms, bell peppers, carrot, zucchini, scallion, and celeries in ginger sauce.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L3. Sautéed Cashew Nut</div>
+      <p class="menu-item__desc">Cashew nuts, onion, mushrooms, bell peppers, carrot, zucchini, and scallion in garlic sauce.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L4. Sautéed American Broccoli</div>
+      <p class="menu-item__desc">American broccoli, mushrooms, and carrot in brown sauce.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L5. Sautéed Mix Vegetable</div>
+      <p class="menu-item__desc">Napa cabbage, broccoli, baby corn, mushrooms, onions, carrots, zucchini, bell peppers and scallion in brown sauce.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L6. Sautéed Garlic Sauce</div>
+      <p class="menu-item__desc">Mushrooms, coriander, and grounded pepper in garlic sauce.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="menu-section" id="noodles">
+  <div class="section-heading">
+    <h2 class="philosopher">Noodles</h2>
+  </div>
+  <div style="max-width:800px; margin:0 auto;">
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L7. Pad Thai</div>
+      <p class="menu-item__desc">Stir-fried rice noodles with egg, bean sprouts, tofu, peanut &amp; scallions.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L8. Pad Se-Ew</div>
+      <p class="menu-item__desc">Stir-fried flat rice noodles with Chinese broccoli &amp; egg.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L9. Spicy Noodle 🌶️</div>
+      <p class="menu-item__desc">Flat rice noodles, basil, bell pepper, and onion in spicy basil sauce.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="menu-section menu-section--alt" id="fried-rice">
+  <div class="section-heading">
+    <h2 class="philosopher">Fried Rice</h2>
+  </div>
+  <div style="max-width:800px; margin:0 auto;">
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L10. Thai Fried Rice</div>
+      <p class="menu-item__desc">Cucumber, tomatoes, egg, onions &amp; scallions.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L11. Thai Basil Fried Rice 🌶️</div>
+      <p class="menu-item__desc">Basil, chili, bell peppers, onions &amp; egg.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="menu-section" id="curry">
+  <div class="section-heading">
+    <h2 class="philosopher">Curry<span class="sub">Served with Jasmine Rice</span></h2>
+  </div>
+  <div style="max-width:800px; margin:0 auto;">
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L12. Red Curry 🌶️</div>
+      <p class="menu-item__desc">Bamboo shoots, eggplants, bell peppers, and basil leaves in coconut milk.</p>
+    </div>
+
+    <div class="menu-item" style="border-bottom:1px solid var(--border); padding:.9rem 0;">
+      <div class="menu-item__name">L13. Green Curry 🌶️</div>
+      <p class="menu-item__desc">Zucchini, bamboo shoots, bell peppers, and basil leaves in coconut milk.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <img src="TumThaiLogo.png" alt="Tum Thai Cuisine" style="height:72px; width:auto; object-fit:contain; mix-blend-mode:lighten; margin-bottom:.65rem;"/>
+      <p class="footer__tagline">Authentic Thai dining experience in the heart of New York.</p>
+    </div>
+    <div>
+      <h3>Contact Us</h3>
+      <address>274 Merrick Rd., Rockville Centre,<br/>NY 11570, US</address>
+      <p class="footer__phone">516-543-5078</p>
+    </div>
+    <div>
+      <h3>Social Media</h3>
+      <div class="footer__social">
+        <a href="https://www.facebook.com/p/Tum-Thai-Cuisine-100065232060429/" target="_blank">Facebook</a>
+        <a href="https://www.instagram.com/explore/locations/864068906/tumthai/" target="_blank">Instagram</a>
+        <a href="https://www.tripadvisor.com/Restaurant_Review-g48509-d7697902-Reviews-Tum_Thai-Rockville_Centre_Long_Island_New_York.html" target="_blank">Tripadvisor</a>
+      </div>
+    </div>
+  </div>
+  <p class="footer__copy">&copy; <span id="year"></span> Tum Thai Cuisine. All rights reserved.</p>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

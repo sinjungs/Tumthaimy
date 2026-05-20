@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu – Tum Thai Cuisine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ── Variables ─────────────────────────────────────────── */
+    :root {
+      --cream:        #f2efe8;
+      --cream-alt:    #ece5da;
+      --parchment:    #f7f1e8;
+      --border:       #d8c7b4;
+      --border-inner: #e5d7c5;
+      --brown-dark:   #2d1a0f;
+      --brown-mid:    #46362d;
+      --brown-nav:    #4b250c;
+      --brown-accent: #7b4618;
+      --brown-footer: #8b571d;
+      --gold:         #d9a066;
+      --gold-light:   #e8bc7b;
+      --gold-hover:   #efc08c;
+      --gold-bar:     #b88347;
+      --text-muted:   #5a4335;
+      --text-card:    #6a584d;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--brown-dark);
+      font-family: 'Lato', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; color: inherit; }
+
+    .philosopher { font-family: 'Philosopher', serif; }
+
+    /* ── Sticky Navbar ─────────────────────────────────────── */
+    .navbar {
+      background: var(--brown-nav);
+      color: var(--gold-light);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 4px 18px rgba(0,0,0,.35);
+    }
+    .navbar__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: .75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .navbar__brand { display: flex; align-items: center; gap: .75rem; }
+    .navbar__logo {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Philosopher', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--brown-nav);
+      flex-shrink: 0;
+    }
+    .navbar__title {
+      font-family: 'Philosopher', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: #fff;
+    }
+    .navbar__sub { font-size: .72rem; color: var(--gold-light); }
+    .navbar__links {
+      display: flex; gap: 1.75rem; list-style: none;
+      font-family: 'Philosopher', serif;
+      font-weight: 700; font-size: .95rem; letter-spacing: .04em;
+    }
+    .navbar__links a { color: var(--gold-light); transition: color .2s; white-space: nowrap; }
+    .navbar__links a:hover,
+    .navbar__links a.active { color: #fff; }
+    .navbar__cta {
+      background: var(--gold); color: #3a1d0f;
+      border: none; padding: .5rem 1.3rem;
+      border-radius: 999px;
+      font-family: 'Philosopher', serif; font-size: .95rem; font-weight: 700;
+      cursor: pointer; transition: background .2s, transform .15s;
+      white-space: nowrap;
+    }
+    .navbar__cta:hover { background: var(--gold-light); transform: scale(1.04); }
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: .25rem;
+    }
+    .nav-toggle span {
+      display: block; width: 26px; height: 2px;
+      background: var(--gold-light); border-radius: 2px;
+    }
+
+    /* ── Page Header Banner ────────────────────────────────── */
+    .page-banner {
+      background: var(--brown-nav);
+      text-align: center;
+      padding: 3rem 1.5rem 2.5rem;
+      border-bottom: 3px solid var(--gold-bar);
+    }
+    .page-banner h1 {
+      font-family: 'Philosopher', serif;
+      font-size: clamp(2.6rem, 6vw, 4rem);
+      color: var(--gold-light);
+      letter-spacing: .06em;
+    }
+    .page-banner p {
+      color: rgba(246,231,211,.7);
+      font-size: 1rem;
+      margin-top: .5rem;
+      letter-spacing: .05em;
+    }
+
+    /* ── Menu Jump Nav ─────────────────────────────────────── */
+    .jump-nav {
+      background: var(--parchment);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      position: sticky;
+      top: 70px;
+      z-index: 998;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+    .jump-nav__list {
+      display: flex; list-style: none;
+      max-width: 1200px; margin: 0 auto;
+      padding: .6rem 1.5rem; gap: .35rem;
+    }
+    .jump-nav__list a {
+      display: block;
+      white-space: nowrap;
+      font-size: .82rem; font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--brown-accent);
+      padding: .45rem .9rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: background .2s, border-color .2s;
+    }
+    .jump-nav__list a:hover {
+      background: var(--brown-accent);
+      color: #fff;
+    }
+
+    /* ── Section Wrapper ───────────────────────────────────── */
+    .menu-section {
+      padding: 4rem 1.25rem 5rem;
+      border-top: 1px solid var(--border);
+      scroll-margin-top: 70px;
+    }
+    .menu-section--alt { background: var(--cream-alt); }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .section-heading h2 {
+      font-family: 'Philosopher', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      color: var(--brown-accent);
+      line-height: 1.2;
+    }
+    .section-heading .sub {
+      font-family: 'Philosopher', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      display: block;
+      margin-top: .3rem;
+    }
+
+    /* ── Choice Card ───────────────────────────────────────── */
+    .choice-card {
+      max-width: 540px;
+      margin: 1.5rem auto 2.5rem;
+      background: var(--parchment);
+      border: 1px solid #d7c2aa;
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      position: relative;
+      box-shadow: 0 8px 30px rgba(123,70,24,.07);
+    }
+    .choice-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold-bar);
+      border-radius: 8px 8px 0 0;
+    }
+    .choice-card h3 {
+      font-family: 'Philosopher', serif;
+      font-size: 1.35rem;
+      color: var(--brown-accent);
+      margin-bottom: 1rem;
+    }
+    .choice-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-inner);
+      padding: .55rem 0;
+      font-size: .95rem;
+    }
+    .choice-row:last-child { border-bottom: none; }
+    .choice-row .label { color: var(--text-muted); font-weight: 600; }
+    .choice-row .price { color: var(--brown-accent); font-weight: 700; }
+
+    /* ── Fish / Duck note ──────────────────────────────────── */
+    .section-note {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--brown-accent);
+      text-align: center;
+      margin-top: .75rem;
+      line-height: 1.7;
+    }
+    .section-note .light { font-weight: 400; font-size: .9rem; color: var(--text-muted); }
+
+    /* ── Menu Grid ─────────────────────────────────────────── */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem 1.75rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ── Menu Item ─────────────────────────────────────────── */
+    .menu-item {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+    .menu-item img {
+      width: 100%; height: 210px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: .85rem;
+      transition: transform .35s ease;
+    }
+    .menu-item:hover img { transform: scale(1.03); }
+    .menu-item__img-wrap { overflow: hidden; border-radius: 10px; }
+    .menu-item__name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: .035em;
+      color: var(--brown-accent);
+      line-height: 1.35;
+      margin-bottom: .4rem;
+    }
+    .menu-item__sub {
+      font-weight: 400;
+      font-size: .88rem;
+      letter-spacing: .01em;
+      display: block;
+      margin-top: .1rem;
+    }
+    .menu-item__desc {
+      font-size: .9rem;
+      color: var(--text-card);
+      line-height: 1.65;
+      letter-spacing: .02em;
+      margin-bottom: .65rem;
+    }
+    .menu-item__price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--brown-accent);
+      letter-spacing: .04em;
+    }
+
+    /* Side order row layout */
+    .menu-item--side .menu-item__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .5rem;
+      margin-top: .2rem;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    .footer {
+      background: var(--brown-footer);
+      color: #fff;
+      padding: 2.5rem 1.5rem;
+    }
+    .footer__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: start;
+    }
+    .footer__logo {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Philosopher', serif; font-weight: 700;
+      font-size: 1.1rem; color: var(--brown-nav); margin-bottom: .65rem;
+    }
+    .footer__tagline { font-size: .8rem; line-height: 1.6; color: #f6e7d3; }
+    .footer h3 { font-family: 'Philosopher', serif; font-size: 1.2rem; margin-bottom: .65rem; }
+    .footer address { font-style: normal; font-size: .8rem; line-height: 1.7; color: #f6e7d3; }
+    .footer__phone { margin-top: .5rem; font-size: .8rem; }
+    .footer__social { display: flex; gap: .65rem; flex-wrap: wrap; margin-top: .35rem; }
+    .footer__social a {
+      border: 1px solid #fff; border-radius: 999px;
+      padding: .3rem .9rem; font-size: .75rem; color: #fff;
+      transition: background .2s, color .2s;
+    }
+    .footer__social a:hover { background: #fff; color: var(--brown-footer); }
+    .footer__copy {
+      text-align: center; font-size: .72rem; color: rgba(255,255,255,.4);
+      margin-top: 2rem; border-top: 1px solid rgba(255,255,255,.15); padding-top: 1rem;
+    }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .navbar__links, .navbar__cta { display: none; }
+      .nav-toggle { display: flex; }
+      .navbar__links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--brown-nav);
+        padding: 1.25rem 1.5rem 1.75rem; gap: 1rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,.25);
+      }
+      .footer__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+      .menu-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────────── -->
+<header class="navbar" id="top">
+  <div class="navbar__inner">
+    <div class="navbar__brand">
+      <img src="TumThaiLogo.png" alt="Tum Thai Cuisine" style="height:60px; width:auto; object-fit:contain; mix-blend-mode:lighten;"/>
+      
+    </div>
+    <nav>
+      <ul class="navbar__links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#" class="active">Menu</a></li>
+        <li><a href="tumthai-lunch.html">Lunch Special</a></li>
+        <li><a href="dessert-drink.html">Dessert-Drink</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="navbar__cta" onclick="window.location='index.html#contact'">Reserve Table</button>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ── Page Banner ─────────────────────────────────────────── -->
+<div class="page-banner">
+  <h1 class="philosopher">Our Menu</h1>
+  <p>Authentic Thai recipes · Fresh ingredients · Handcrafted flavors</p>
+</div>
+
+<!-- ── Jump Navigation ─────────────────────────────────────── -->
+<nav class="jump-nav" aria-label="Jump to section">
+  <ul class="jump-nav__list">
+    <li><a href="#appetizers">Appetizers</a></li>
+    <li><a href="#soup">Soup</a></li>
+    <li><a href="#salad">Salad</a></li>
+    <li><a href="#entree">Entrée</a></li>
+    <li><a href="#noodle">Noodle</a></li>
+    <li><a href="#friedrice">Fried Rice</a></li>
+    <li><a href="#curry">Curry</a></li>
+    <li><a href="#fish">Fish</a></li>
+    <li><a href="#duck">Duck</a></li>
+    <li><a href="#vegetarian">Vegetarian</a></li>
+    <li><a href="#specials">Specials</a></li>
+    <li><a href="#sides">Side Order</a></li>
+  </ul>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  APPETIZERS                                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section" id="appetizers">
+  <div class="section-heading">
+    <h2 class="philosopher">Appetizers</h2>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="A1_Thai_Spring_Roll.png" alt="Thai Spring Roll" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A1. Thai Spring Roll</div>
+      <p class="menu-item__desc">Crispy roll with clear noodles, mixed vegetables, served with plum sauce.</p>
+      <div class="menu-item__price">$12.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="A2_Chicken_Wings.png" alt="Chicken Wings" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A2. Chicken Wings</div>
+      <p class="menu-item__desc">Fried chicken wing served with chili plum sauce.</p>
+      <div class="menu-item__price">$16.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1563379091339-03246963d29a?q=80&w=800&auto=format&fit=crop" alt="Thai Dumpling" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A3. Kanum Jeep <span class="menu-item__sub">(Thai Dumpling)</span></div>
+      <p class="menu-item__desc">Dumpling skin stuffed with marinated ground chicken, sesame oil, water chestnuts, carrot, served with dumpling sauce.</p>
+      <div class="menu-item__price">$14.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=800&auto=format&fit=crop" alt="Satay" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A4. Satay <span class="menu-item__sub">(Choice of Grill: Chicken, Beef)</span></div>
+      <p class="menu-item__desc">Served with peanut sauce &amp; cucumber salad.</p>
+      <div class="menu-item__price">$16.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" alt="Sliced BBQ Beef" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A5. Nua Yang 🌶️ <span class="menu-item__sub">(Sliced BBQ Beef)</span></div>
+      <p class="menu-item__desc">Served with chili tamarind dressing.</p>
+      <div class="menu-item__price">$18.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=800&auto=format&fit=crop" alt="Shrimp Sa Bai Thong" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A6. Shrimp Sa Bai Thong</div>
+      <p class="menu-item__desc">Shrimp stuffed with ground chicken, then wrapped in spring roll skin.</p>
+      <div class="menu-item__price">$16.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?q=80&w=800&auto=format&fit=crop" alt="Pan Fried Vegetable Dumpling" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A7. Pan Fried Vegetable Dumpling</div>
+      <p class="menu-item__desc">Chives dumpling served with chilli sweet soy sauce.</p>
+      <div class="menu-item__price">$16.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1615485737651-9d4a1c48d40f?q=80&w=800&auto=format&fit=crop" alt="Edamame" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A8. Edamame</div>
+      <p class="menu-item__desc">Steamed soybeans lightly seasoned with sea salt.</p>
+      <div class="menu-item__price">$10.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?q=80&w=800&auto=format&fit=crop" alt="Pot Sticker Dumpling" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A9. Pot Sticker Dumpling</div>
+      <p class="menu-item__desc">Chicken, scallion served with sour ponzu sauce.</p>
+      <div class="menu-item__price">$14.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop" alt="Curry Puff" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A10. Curry Puff</div>
+      <p class="menu-item__desc">Chicken, potato, onions served with cucumber salad.</p>
+      <div class="menu-item__price">$16.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1625944525533-473f1b3d54b3?q=80&w=800&auto=format&fit=crop" alt="Fried Calamari" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A11. Fried Calamari</div>
+      <p class="menu-item__desc">Golden crispy squid served with chili plum sauce.</p>
+      <div class="menu-item__price">$16.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" alt="Fried Wonton" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A12. Fried Wonton</div>
+      <p class="menu-item__desc">Crispy wonton stuffed with marinated ground chicken, water chestnut, carrot, celery served with chili plum sauce.</p>
+      <div class="menu-item__price">$14.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop" alt="Duck Roll" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A13. Duck Roll</div>
+      <p class="menu-item__desc">Crispy duck, cucumber, scallion, apple, wrapped with tortilla and served with hoisin sauce.</p>
+      <div class="menu-item__price">$18.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?q=80&w=800&auto=format&fit=crop" alt="Coconut Shrimp" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A14. Coconut Shrimp</div>
+      <p class="menu-item__desc">Fried shrimp with coconut flakes served with chili plum sauce.</p>
+      <div class="menu-item__price">$16.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=800&auto=format&fit=crop" alt="Grilled Squid" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">A15. Grilled Squid</div>
+      <p class="menu-item__desc">Grilled squid served with chili tamarind sauce.</p>
+      <div class="menu-item__price">$18.00</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  SOUP                                                     -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section menu-section--alt" id="soup">
+  <div class="section-heading">
+    <h2 class="philosopher">Soup</h2>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop" alt="Tom Yum Goong" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S11. Tom Yum Goong 🌶️ <span class="menu-item__sub">(Spicy Shrimp Soup)</span></div>
+      <p class="menu-item__desc">Shrimp with galangal, lemon grass, lime leaves, mushrooms &amp; chili paste.</p>
+      <div class="menu-item__price">$10.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop" alt="Tom Kha Gai" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S12. Tom Kha Gai</div>
+      <p class="menu-item__desc">Chicken with galangal, lemon grass, lime leaves, and mushrooms in coconut milk.</p>
+      <div class="menu-item__price">$10.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=800&auto=format&fit=crop" alt="Vegetable Soup" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S13. Tom Juad Vegetable <span class="menu-item__sub">(Vegetable Soup)</span></div>
+      <p class="menu-item__desc">Chicken broth with clear noodles, tofu &amp; mixed vegetables.</p>
+      <div class="menu-item__price">$9.00</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  SALAD                                                    -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section" id="salad">
+  <div class="section-heading">
+    <h2 class="philosopher">Salad</h2>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1546793665-c74683f339c1?q=80&w=800&auto=format&fit=crop" alt="Thai Salad" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S1. Thai Salad</div>
+      <p class="menu-item__desc">Mixed green salads, tofu, egg, cucumber, and tomato with peanut dressing.</p>
+      <div class="menu-item__price">$14.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop" alt="Papaya Salad" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S2. Som Tum 🌶️ <span class="menu-item__sub">(Papaya Salad)</span></div>
+      <p class="menu-item__desc">Green papaya, tomato, green beans.</p>
+      <div class="menu-item__price">$16.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" alt="Beef Salad" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S3. Nam Tok Nua 🌶️ <span class="menu-item__sub">(Beef Salad)</span></div>
+      <p class="menu-item__desc">Grilled marinated beef with shallot, scallion, mint, cilantro, and roasted minced rice.</p>
+      <div class="menu-item__price">$20.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=800&auto=format&fit=crop" alt="Seafood Salad" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S4. Yum Ta-lay 🌶️ <span class="menu-item__sub">(Seafood Salad)</span></div>
+      <p class="menu-item__desc">Shrimp, squid, scallops, mussels, onion, and lemon grass in chili lime sauce.</p>
+      <div class="menu-item__price">$20.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop" alt="Duck Salad" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S5. Yum Ped 🌶️ <span class="menu-item__sub">(Duck Salad)</span></div>
+      <p class="menu-item__desc">Crispy duck with chili paste, cashew nuts, ground peanut, pineapple, green apple &amp; onion.</p>
+      <div class="menu-item__price">$20.00</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop" alt="Coconut Chicken Salad" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">S6. Coconut Chicken</div>
+      <p class="menu-item__desc">Fried chicken breast with coconut flakes on top of mixed green salad served with ginger dressing and spicy mayo sauce.</p>
+      <div class="menu-item__price">$18.00</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  ENTRÉE (SAUTÉED)                                         -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section menu-section--alt" id="entree">
+  <div class="section-heading">
+    <h2 class="philosopher">Entrée<span class="sub">Sautéed · Served with Jasmine Rice</span></h2>
+    <div class="choice-card">
+      <h3>Choice of Protein</h3>
+      <div class="choice-row"><span class="label">Tofu or Vegetable</span><span class="price">$18</span></div>
+      <div class="choice-row"><span class="label">Chicken, Pork, or Vegetarian Duck</span><span class="price">$18</span></div>
+      <div class="choice-row"><span class="label">Beef, Shrimp, or Squid</span><span class="price">$20</span></div>
+      <div class="choice-row"><span class="label">Mixed Seafood</span><span class="price">$30</span></div>
+    </div>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop" alt="Hot Sweet Basil" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">E1. Hot Sweet Basil</div>
+      <p class="menu-item__desc">Fresh basil, mushrooms, bell peppers, and onion in basil sauce.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop" alt="Ginger" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">E2. Ginger</div>
+      <p class="menu-item__desc">Fresh ginger, onion, mushrooms, bell peppers, carrot, zucchini, scallion, and celery in ginger sauce.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" alt="Cashew Nut" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">E3. Cashew Nut</div>
+      <p class="menu-item__desc">Cashew nuts, onion, mushrooms, bell peppers, carrot, zucchini, and scallion in garlic sauce.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1543332164-6e82f355badc?q=80&w=800&auto=format&fit=crop" alt="American Broccoli" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">E4. American Broccoli</div>
+      <p class="menu-item__desc">American broccoli, mushrooms, and carrot in brown sauce.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop" alt="Mix Vegetable" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">E5. Mix Vegetable</div>
+      <p class="menu-item__desc">Napa cabbage, broccoli, baby corn, mushrooms, onions, zucchini, carrots, and scallion in brown sauce.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?q=80&w=800&auto=format&fit=crop" alt="Sweet Sour" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">E6. Sweet Sour</div>
+      <p class="menu-item__desc">Cucumber, tomatoes, pineapple, bell peppers, onion, and scallion in sweet and sour sauce.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=800&auto=format&fit=crop" alt="Garlic Sauce" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">E7. Garlic Sauce</div>
+      <p class="menu-item__desc">Mushrooms, cilantro, and grounded pepper in garlic sauce.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  NOODLE                                                   -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section" id="noodle">
+  <div class="section-heading">
+    <h2 class="philosopher">Noodle</h2>
+    <div class="choice-card">
+      <h3>Choice of Protein</h3>
+      <div class="choice-row"><span class="label">Tofu or Vegetable</span><span class="price">$18</span></div>
+      <div class="choice-row"><span class="label">Chicken, Pork, or Vegetarian Duck</span><span class="price">$18</span></div>
+      <div class="choice-row"><span class="label">Beef, Shrimp, or Squid</span><span class="price">$20</span></div>
+      <div class="choice-row"><span class="label">Mixed Seafood</span><span class="price">$30</span></div>
+    </div>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?q=80&w=800&auto=format&fit=crop" alt="Pad Thai" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">N1. Pad Thai</div>
+      <p class="menu-item__desc">Stir-fried rice noodles with egg, bean sprouts, tofu, peanut &amp; scallions.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop" alt="Pad Se-ew" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">N2. Pad Se-ew</div>
+      <p class="menu-item__desc">Stir-fried flat rice noodles with Chinese broccoli &amp; egg.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=800&auto=format&fit=crop" alt="Spicy Noodle" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">N3. Spicy Noodle 🌶️</div>
+      <p class="menu-item__desc">Flat rice noodles, basil, bell pepper, and onion in spicy basil sauce.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop" alt="Pad Woon Sen" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">N4. Pad Woon Sen</div>
+      <p class="menu-item__desc">Clear noodles, carrot, zucchini, onion, mushrooms, celery, egg &amp; scallion.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  FRIED RICE                                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section menu-section--alt" id="friedrice">
+  <div class="section-heading">
+    <h2 class="philosopher">Fried Rice</h2>
+    <div class="choice-card">
+      <h3>Choice of Protein</h3>
+      <div class="choice-row"><span class="label">Tofu or Vegetable</span><span class="price">$18</span></div>
+      <div class="choice-row"><span class="label">Chicken, Pork, or Vegetarian Duck</span><span class="price">$18</span></div>
+      <div class="choice-row"><span class="label">Beef, Shrimp, or Squid</span><span class="price">$20</span></div>
+      <div class="choice-row"><span class="label">Mixed Seafood</span><span class="price">$30</span></div>
+    </div>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop" alt="Thai Fried Rice" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">R1. Thai Fried Rice</div>
+      <p class="menu-item__desc">Cucumber, tomatoes, egg, onions &amp; scallions.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop" alt="Thai Basil Fried Rice" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">R2. Thai Basil Fried Rice 🌶️</div>
+      <p class="menu-item__desc">Basil, chili, bell peppers, onions &amp; egg.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?q=80&w=800&auto=format&fit=crop" alt="Pineapple Fried Rice" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">R3. Pineapple Fried Rice</div>
+      <p class="menu-item__desc">Pineapple, onion, cashew nuts, egg and scallions.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" alt="Crab Meat Fried Rice" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">R4. Crab Meat Fried Rice</div>
+      <p class="menu-item__desc">Colossal crab meat, cashew nuts, green pea, carrot, egg, onions and scallions.</p>
+      <div class="menu-item__price">$32</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  CURRY                                                    -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section" id="curry">
+  <div class="section-heading">
+    <h2 class="philosopher">Curry<span class="sub">Served with Jasmine Rice</span></h2>
+    <div class="choice-card">
+      <h3>Choice of Protein</h3>
+      <div class="choice-row"><span class="label">Tofu or Vegetable</span><span class="price">$18</span></div>
+      <div class="choice-row"><span class="label">Chicken, Pork, or Vegetarian Duck</span><span class="price">$18</span></div>
+      <div class="choice-row"><span class="label">Beef, Shrimp, or Squid</span><span class="price">$20</span></div>
+      <div class="choice-row"><span class="label">Mixed Seafood</span><span class="price">$30</span></div>
+    </div>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?q=80&w=800&auto=format&fit=crop" alt="Red Curry" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">C1. Red Curry 🌶️</div>
+      <p class="menu-item__desc">Bamboo shoots, eggplants, bell peppers, and basil leaves in coconut milk.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop" alt="Green Curry" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">C2. Green Curry 🌶️</div>
+      <p class="menu-item__desc">Zucchini, string bean, bamboo shoots, bell peppers, and basil leaves in coconut milk.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop" alt="Yellow Curry" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">C3. Yellow Curry 🌶️</div>
+      <p class="menu-item__desc">Potatoes, bell peppers, carrots, onion, and curry powder in coconut milk.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" alt="Panang Curry" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">C4. Panang Curry 🌶️</div>
+      <p class="menu-item__desc">String beans, bell peppers in coconut milk with panang chili paste.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=800&auto=format&fit=crop" alt="Massaman Curry" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">C5. Massaman Curry 🌶️</div>
+      <p class="menu-item__desc">Potatoes, peanuts, bell peppers, onion, bay leaves, and tamarind sauce in coconut milk.</p>
+      <div class="menu-item__price">from $18</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  FISH                                                     -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section menu-section--alt" id="fish">
+  <div class="section-heading">
+    <h2 class="philosopher">Fish</h2>
+    <p class="section-note">Red Snapper (Whole fish or fillet) — $42.00<br><span class="light">Served with jasmine rice</span></p>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544943910-4c1dc44aab44?q=80&w=800&auto=format&fit=crop" alt="Pla Lad Prig" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">F1. Pla Lad Prig 🌶️</div>
+      <p class="menu-item__desc">Crispy golden fish topped with garlic, mushrooms, bell peppers and spicy &amp; sour sauce.</p>
+      <div class="menu-item__price">$42</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=800&auto=format&fit=crop" alt="Pla Kra Prow" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">F2. Pla Kra Prow 🌶️</div>
+      <p class="menu-item__desc">Crispy golden fish topped with bell peppers, zucchini, carrots, mushrooms and chili &amp; Thai basil sauce.</p>
+      <div class="menu-item__price">$42</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?q=80&w=800&auto=format&fit=crop" alt="Pla Curry" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">F3. Pla Curry 🌶️</div>
+      <p class="menu-item__desc">Crispy golden fish in Red or Green Curry with basil, lime leaves and bell peppers.</p>
+      <div class="menu-item__price">$42</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800&auto=format&fit=crop" alt="Pla Ginger" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">F4. Pla Ginger</div>
+      <p class="menu-item__desc">Crispy golden fish with fresh ginger, mushrooms, onion, and bell peppers in ginger sauce.</p>
+      <div class="menu-item__price">$42</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=800&auto=format&fit=crop" alt="Pla Garlic Pepper" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">F5. Pla Garlic &amp; Pepper</div>
+      <p class="menu-item__desc">Crispy golden fish with mushrooms and scallions in garlic sauce.</p>
+      <div class="menu-item__price">$42</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  DUCK                                                     -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section" id="duck">
+  <div class="section-heading">
+    <h2 class="philosopher">Duck</h2>
+    <p class="section-note">All duck entrées (Half Duck) — $30.00<br><span class="light">Served with jasmine rice</span></p>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop" alt="Pineapple Duck Curry" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">D1. Pineapple Duck Curry</div>
+      <p class="menu-item__desc">Amazing Thai curry with pineapple, basil, bell peppers, tomatoes, &amp; lime leaves.</p>
+      <div class="menu-item__price">$30</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" alt="Hot Sweet Basil Duck" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">D2. Hot Sweet Basil Duck</div>
+      <p class="menu-item__desc">Crispy duck with basil leaves, bell peppers, zucchini, mushroom, and onion in basil sauce.</p>
+      <div class="menu-item__price">$30</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?q=80&w=800&auto=format&fit=crop" alt="Tamarind Honey Duck" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">D3. Tamarind Honey Duck</div>
+      <p class="menu-item__desc">Crispy duck with bell peppers &amp; mushrooms in tamarind honey sauce.</p>
+      <div class="menu-item__price">$30</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  VEGETARIAN ENTRÉES                                       -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section menu-section--alt" id="vegetarian">
+  <div class="section-heading">
+    <h2 class="philosopher">Vegetarian Entrées<span class="sub">Served with Jasmine Rice</span></h2>
+    <div class="choice-card">
+      <h3>Choice of Protein</h3>
+      <div class="choice-row"><span class="label">Tofu or Vegetarian Duck</span><span class="price">$18</span></div>
+    </div>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop" alt="Spicy Eggplant" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">V1. Spicy Eggplant 🌶️</div>
+      <p class="menu-item__desc">Sautéed eggplant, basil, bell peppers, onion, and garlic in chili sauce.</p>
+      <div class="menu-item__price">$18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop" alt="Basil Garden" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">V2. Basil Garden</div>
+      <p class="menu-item__desc">Sautéed mixed veggies, basil, bell peppers in basil sauce.</p>
+      <div class="menu-item__price">$18</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop" alt="Amazing Rama" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">V3. Amazing Rama</div>
+      <p class="menu-item__desc">Sautéed mixed veggies in peanut sauce.</p>
+      <div class="menu-item__price">$18</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  SPECIALS                                                 -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section" id="specials">
+  <div class="section-heading">
+    <h2 class="philosopher">Specials</h2>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1604908176997-4318f2b3b2d8?q=80&w=800&auto=format&fit=crop" alt="Peanut Chicken" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">SP1. Peanut Chicken</div>
+      <p class="menu-item__desc">Grilled marinated chicken breast with mixed vegetable in peanut sauce.</p>
+      <div class="menu-item__price">$28</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1526318896980-cf78c088247c?q=80&w=800&auto=format&fit=crop" alt="Duck Noodle Soup" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">SP2. Duck Noodle Soup <span class="menu-item__sub">(Half Duck)</span></div>
+      <p class="menu-item__desc">Half roasted duck, rice vermicelli noodle, bok choy, bean sprout, and scallion in five spice dark broth.</p>
+      <div class="menu-item__price">$30</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop" alt="Grilled Pork Chop Lemongrass" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">SP3. Grilled Pork Chop Lemongrass</div>
+      <p class="menu-item__desc">Grilled pork chop marinated with lemongrass, honey, black pepper, garlic served with spicy basil fried rice.</p>
+      <div class="menu-item__price">$28</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?q=80&w=800&auto=format&fit=crop" alt="Siam Shrimp" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">SP4. Siam Shrimp</div>
+      <p class="menu-item__desc">Grilled marinated jumbo shrimp served with pineapple fried rice.</p>
+      <div class="menu-item__price">$34</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=800&auto=format&fit=crop" alt="Salmon Ginger" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">SP5. Salmon Ginger <span class="menu-item__sub">(10oz)</span></div>
+      <p class="menu-item__desc">Pan seared salmon, fresh ginger, onion, mushrooms, bell peppers, carrot, zucchini, scallion, and celery in ginger sauce.</p>
+      <div class="menu-item__price">$30</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800&auto=format&fit=crop" alt="Chilean Sea Bass" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">SP6. Chilean Sea Bass <span class="menu-item__sub">(10oz)</span></div>
+      <p class="menu-item__desc">Pan seared Chilean sea bass, baby bok choy, mushroom, bell pepper with sweet chili sauce.</p>
+      <div class="menu-item__price">$42</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=800&auto=format&fit=crop" alt="Tom Yum Seafood Noodle Soup" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">SP7. Tom Yum Seafood Noodle Soup</div>
+      <p class="menu-item__desc">Rice vermicelli noodle, jumbo shrimp, scallop, squid, mussel, bok choy, bean sprout, ground peanut, boiled egg in spicy clear tom yum soup.</p>
+      <div class="menu-item__price">$30</div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=800&auto=format&fit=crop" alt="Salmon Green Curry" loading="lazy"/>
+      </div>
+      <div class="menu-item__name">SP8. Salmon Green Curry <span class="menu-item__sub">(10oz)</span></div>
+      <p class="menu-item__desc">Pan seared salmon, zucchini, bamboo shoot, bell pepper, basil leaves in coconut milk.</p>
+      <div class="menu-item__price">$30</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  SIDE ORDER                                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<section class="menu-section menu-section--alt" id="sides">
+  <div class="section-heading">
+    <h2 class="philosopher">Side Order</h2>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item menu-item--side">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=800&auto=format&fit=crop" alt="Jasmine Rice" loading="lazy"/>
+      </div>
+      <div class="menu-item__row">
+        <div class="menu-item__name">Jasmine Rice</div>
+        <div class="menu-item__price">$3.00</div>
+      </div>
+    </div>
+
+    <div class="menu-item menu-item--side">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop" alt="Steamed Vegetable" loading="lazy"/>
+      </div>
+      <div class="menu-item__row">
+        <div class="menu-item__name">Steamed Vegetable</div>
+        <div class="menu-item__price">$7.00</div>
+      </div>
+    </div>
+
+    <div class="menu-item menu-item--side">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800&auto=format&fit=crop" alt="Steamed Noodles" loading="lazy"/>
+      </div>
+      <div class="menu-item__row">
+        <div class="menu-item__name">Steamed Noodles</div>
+        <div class="menu-item__price">$7.00</div>
+      </div>
+    </div>
+
+    <div class="menu-item menu-item--side">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1604908176997-4318f2b3b2d8?q=80&w=800&auto=format&fit=crop" alt="Brown Rice" loading="lazy"/>
+      </div>
+      <div class="menu-item__row">
+        <div class="menu-item__name">Brown Rice</div>
+        <div class="menu-item__price">$4.00</div>
+      </div>
+    </div>
+
+    <div class="menu-item menu-item--side">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?q=80&w=800&auto=format&fit=crop" alt="Curry Rice" loading="lazy"/>
+      </div>
+      <div class="menu-item__row">
+        <div class="menu-item__name">Curry Rice</div>
+        <div class="menu-item__price">$7.00</div>
+      </div>
+    </div>
+
+    <div class="menu-item menu-item--side">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=800&auto=format&fit=crop" alt="Sticky Rice" loading="lazy"/>
+      </div>
+      <div class="menu-item__row">
+        <div class="menu-item__name">Sticky Rice</div>
+        <div class="menu-item__price">$5.00</div>
+      </div>
+    </div>
+
+    <div class="menu-item menu-item--side">
+      <div class="menu-item__img-wrap">
+        <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?q=80&w=800&auto=format&fit=crop" alt="Peanut Sauce" loading="lazy"/>
+      </div>
+      <div class="menu-item__row">
+        <div class="menu-item__name">Peanut Sauce</div>
+        <div class="menu-item__price">$2.00</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── Footer ──────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>
+      <img src="TumThaiLogo.png" alt="Tum Thai Cuisine" style="height:72px; width:auto; object-fit:contain; mix-blend-mode:lighten; margin-bottom:.65rem;"/>
+      <p class="footer__tagline">Authentic Thai dining experience in the heart of New York.</p>
+    </div>
+    <div>
+      <h3>Contact Us</h3>
+      <address>274 Merrick Rd., Rockville Centre,<br/>NY 11570, US</address>
+      <p class="footer__phone">516-543-5078</p>
+    </div>
+    <div>
+      <h3>Social Media</h3>
+      <div class="footer__social">
+        <a href="https://www.facebook.com/p/Tum-Thai-Cuisine-100065232060429/" target="_blank">Facebook</a>
+        <a href="https://www.instagram.com/explore/locations/864068906/tumthai/" target="_blank">Instagram</a>
+        <a href="https://www.tripadvisor.com/Restaurant_Review-g48509-d7697902-Reviews-Tum_Thai-Rockville_Centre_Long_Island_New_York.html" target="_blank">Tripadvisor</a>
+      </div>
+    </div>
+  </div>
+  <p class="footer__copy">&copy; <span id="year"></span> Tum Thai Cuisine. All rights reserved.</p>
+</footer>
+
+<script>
+  /* Mobile nav */
+  const toggle = document.getElementById('navToggle');
+  const links  = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  /* Year */
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
